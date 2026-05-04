@@ -1,0 +1,51 @@
+---
+title: "Attention Is All You Need"
+date: "2017-06-12"
+field: "NLP"
+venue: "NeurIPS"
+year: 2017
+tags: ["transformer", "attention", "seq2seq"]
+summary: "RNN 없이 어텐션만으로 시퀀스 변환 문제를 푼 논문. NLP 패러다임을 바꿈."
+---
+
+## 논문 개요
+
+이 논문은 **Transformer**라는 새로운 시퀀스 변환 아키텍처를 제안합니다.
+기존 RNN/CNN 기반 모델을 완전히 배제하고 오직 어텐션 메커니즘만으로 구성되어 있어요.
+
+## 배경 지식
+
+기존 시퀀스 모델(RNN, LSTM, GRU)은 순차적으로 처리해야 하므로 병렬화가 어려웠습니다.
+이는 긴 시퀀스에서 학습 속도와 long-range dependency 문제를 야기했어요.
+
+### RNN의 한계
+
+순차 처리라는 본질 때문에:
+
+- 시점 t의 계산은 t-1이 끝나야 시작 가능
+- GPU 병렬화의 이점을 못 살림
+- 긴 시퀀스에서 그래디언트 소실
+
+## 제안 방법
+
+Scaled Dot-Product Attention과 Multi-Head Attention을 통해 시퀀스 내 모든 위치 간의
+관계를 한 번에 계산합니다. Positional Encoding으로 순서 정보를 주입하고요.
+
+핵심 수식:
+
+$$
+\text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)V
+$$
+
+## 실험 결과
+
+| 모델 | BLEU (EN-DE) | 학습 비용 |
+| --- | --- | --- |
+| GNMT | 24.6 | $1.4 \times 10^{20}$ FLOPs |
+| ConvS2S | 25.1 | $9.6 \times 10^{18}$ FLOPs |
+| **Transformer (big)** | **28.4** | $2.3 \times 10^{19}$ FLOPs |
+
+## 결론 및 평가
+
+이 논문은 NLP 패러다임을 완전히 바꿔버린 작품. 이후 BERT, GPT 시리즈가 모두
+이 아키텍처를 기반으로 만들어졌어요. 안 읽고 NLP 한다는 건 사실상 불가능.
