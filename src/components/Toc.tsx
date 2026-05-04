@@ -64,7 +64,7 @@ export default function Toc({ items }: { items: TocItem[] }) {
   if (items.length === 0) return null;
 
   return (
-    <div className="sticky top-12">
+    <div className="sticky top-20">
       <h2 className="mb-3 text-xs font-semibold uppercase tracking-wider text-zinc-500">
         On this page
       </h2>

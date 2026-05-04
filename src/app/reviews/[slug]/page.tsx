@@ -80,13 +80,21 @@ export default async function ReviewPage({
             <p className="text-sm font-semibold text-blue-600">
               {meta.field} · {meta.venue} {meta.year}
             </p>
-            <h1 className="mt-2 text-4xl font-bold leading-tight">{meta.title}</h1>
+            <h1
+              data-pagefind-meta="title"
+              className="mt-2 text-4xl font-bold leading-tight"
+            >
+              {meta.title}
+            </h1>
             <p className="mt-3 text-sm text-zinc-500">
               {meta.date} · 태그: {meta.tags.join(', ')}
             </p>
           </header>
 
-          <article className="prose prose-zinc dark:prose-invert max-w-none">
+          <article
+            data-pagefind-body
+            className="prose prose-zinc dark:prose-invert max-w-none"
+          >
             <MDXContent />
           </article>
         </div>

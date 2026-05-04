@@ -10,4 +10,5 @@ export const SITE = {
   verification: {
     google: 'G_QnIAlnbEoVyo9myFb3f8hBrQXcmCC2b45WJaKnris',
   },
+  github: 'https://github.com/nametwo',
 } as const;

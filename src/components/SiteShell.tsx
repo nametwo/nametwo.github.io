@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import { getSidebarData } from '@/lib/reviews';
-import ThemeToggle from '@/components/ThemeToggle';
 import type { ReactNode } from 'react';
 
 // 모든 페이지가 공유할 좌측 사이드바 + 본문 레이아웃.
@@ -15,29 +14,19 @@ export default function SiteShell({ children }: { children: ReactNode }) {
         
         {/* 좌측 사이드바 */}
         <aside className="col-span-12 lg:col-span-3">
-          <div className="lg:sticky lg:top-12">
-            <Link href="/" className="block mb-6">
-              <h1 className="text-lg font-bold">📚 논문 리뷰</h1>
-              <p className="text-xs text-zinc-500 mt-1">전체 {total}편</p>
-            </Link>
+          <div className="lg:sticky lg:top-20">
+            <p className="mb-6 text-xs text-zinc-500">전체 {total}편</p>
 
             <nav className="space-y-6 text-sm">
               <Section title="분야" items={fields} basePath="/fields" />
               <Section title="학회" items={venues} basePath="/venues" />
               <Section title="태그" items={tags.slice(0, 10)} basePath="/tags" />
             </nav>
-
-            <div className="mt-8 pt-6 border-t border-zinc-200 dark:border-zinc-800">
-              <div className="pb-2 text-xs uppercase tracking-wider text-zinc-500">
-                테마
-              </div>
-              <ThemeToggle />
-            </div>
           </div>
         </aside>
 
         {/* 본문 영역 */}
-        <main className="col-span-12 lg:col-span-9">{children}</main>
+        <main className="col-span-12 lg:col-span-9 min-w-0">{children}</main>
       </div>
     </div>
   );
