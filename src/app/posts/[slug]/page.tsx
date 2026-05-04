@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
-import { getAllReviewSlugs, getAllReviews, getReviewToc } from '@/lib/reviews';
+import { getAllPostSlugs, getAllPosts, getPostToc } from '@/lib/posts';
+import { getSeriesName } from '@/lib/series';
 import { SITE } from '@/lib/site';
 import SiteShell from '@/components/SiteShell';
 import Toc from '@/components/Toc';
@@ -8,7 +9,7 @@ import Comments from '@/components/Comments';
 import { notFound } from 'next/navigation';
 
 export function generateStaticParams() {
-  return getAllReviewSlugs().map((slug) => ({ slug }));
+  return getAllPostSlugs().map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({
@@ -17,10 +18,10 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const meta = getAllReviews().find((r) => r.slug === slug);
+  const meta = getAllPosts().find((p) => p.slug === slug);
   if (!meta) return {};
 
-  const url = `${SITE.url}/reviews/${slug}`;
+  const url = `${SITE.url}/posts/${slug}`;
   return {
     title: meta.title,
     description: meta.summary,
@@ -42,19 +43,19 @@ export async function generateMetadata({
   };
 }
 
-export default async function ReviewPage({
+export default async function PostPage({
   params,
 }: {
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const meta = getAllReviews().find((r) => r.slug === slug);
+  const meta = getAllPosts().find((p) => p.slug === slug);
   if (!meta) notFound();
 
-  const toc = getReviewToc(slug);
-  const { default: MDXContent } = await import(`@/../content/reviews/${slug}.mdx`);
+  const toc = getPostToc(slug);
+  const { default: MDXContent } = await import(`@/../content/posts/${slug}.mdx`);
 
-  // schema.org BlogPosting 구조화 데이터. 검색엔진이 글의 메타정보를 정확히 인식.
+  // schema.org BlogPosting 구조화 데이터.
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
@@ -64,7 +65,7 @@ export default async function ReviewPage({
     author: { '@type': 'Person', name: SITE.author },
     publisher: { '@type': 'Organization', name: SITE.name, url: SITE.url },
     keywords: meta.tags.join(', '),
-    url: `${SITE.url}/reviews/${slug}`,
+    url: `${SITE.url}/posts/${slug}`,
   };
 
   return (
@@ -74,12 +75,15 @@ export default async function ReviewPage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      {/* 본문(9칸) 안을 다시 본문 + TOC로 쪼갬: 본문 8 / TOC 4 (총 12) */}
       <div className="grid grid-cols-12 gap-8">
         <div className="col-span-12 lg:col-span-8">
           <header className="mb-12">
             <p className="text-sm font-semibold text-blue-600">
-              {meta.field} · {meta.venue} {meta.year}
+              {meta.kind === 'paper'
+                ? `${meta.field} · ${meta.venue} ${meta.year}`
+                : meta.series
+                  ? getSeriesName(meta.series)
+                  : '개발 로그'}
             </p>
             <h1
               data-pagefind-meta="title"

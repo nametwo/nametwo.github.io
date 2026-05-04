@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
-import type { TocItem } from '@/lib/reviews';
+import type { TocItem } from '@/lib/posts';
 
 // 스크롤 위치보다 이만큼 위의 헤딩을 active로 본다.
 // 헤더/여백을 고려한 시각적 "현재 읽는 줄" 기준점.

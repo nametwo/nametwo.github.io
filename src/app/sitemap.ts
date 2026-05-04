@@ -1,24 +1,26 @@
 import type { MetadataRoute } from 'next';
 import { SITE } from '@/lib/site';
-import { getAllReviews, getSidebarData } from '@/lib/reviews';
+import { getAllPosts, getSidebarData } from '@/lib/posts';
 
 // output: "export" 환경에서 정적 sitemap.xml로 떨어지도록 명시.
 export const dynamic = 'force-static';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const reviews = getAllReviews();
-  const { fields, venues, tags } = getSidebarData();
+  const posts = getAllPosts();
+  const { fields, venues, series, tags } = getSidebarData();
 
   const staticUrls: MetadataRoute.Sitemap = [
     { url: SITE.url, lastModified: new Date(), priority: 1.0 },
+    { url: `${SITE.url}/papers`, lastModified: new Date(), priority: 0.7 },
+    { url: `${SITE.url}/devlogs`, lastModified: new Date(), priority: 0.7 },
     { url: `${SITE.url}/about`, lastModified: new Date(), priority: 0.5 },
     { url: `${SITE.url}/privacy`, lastModified: new Date(), priority: 0.3 },
     { url: `${SITE.url}/terms`, lastModified: new Date(), priority: 0.3 },
   ];
 
-  const reviewUrls = reviews.map((r) => ({
-    url: `${SITE.url}/reviews/${r.slug}`,
-    lastModified: new Date(r.date),
+  const postUrls = posts.map((p) => ({
+    url: `${SITE.url}/posts/${p.slug}`,
+    lastModified: new Date(p.date),
     priority: 0.8,
   }));
 
@@ -32,11 +34,23 @@ export default function sitemap(): MetadataRoute.Sitemap {
     lastModified: new Date(),
     priority: 0.6,
   }));
+  const seriesUrls = series.map((s) => ({
+    url: `${SITE.url}/series/${s.slug}`,
+    lastModified: new Date(),
+    priority: 0.6,
+  }));
   const tagUrls = tags.map((t) => ({
     url: `${SITE.url}/tags/${t.slug}`,
     lastModified: new Date(),
     priority: 0.5,
   }));
 
-  return [...staticUrls, ...reviewUrls, ...fieldUrls, ...venueUrls, ...tagUrls];
+  return [
+    ...staticUrls,
+    ...postUrls,
+    ...fieldUrls,
+    ...venueUrls,
+    ...seriesUrls,
+    ...tagUrls,
+  ];
 }
