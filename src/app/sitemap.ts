@@ -11,6 +11,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const staticUrls: MetadataRoute.Sitemap = [
     { url: SITE.url, lastModified: new Date(), priority: 1.0 },
+    { url: `${SITE.url}/about`, lastModified: new Date(), priority: 0.5 },
+    { url: `${SITE.url}/privacy`, lastModified: new Date(), priority: 0.3 },
+    { url: `${SITE.url}/terms`, lastModified: new Date(), priority: 0.3 },
   ];
 
   const reviewUrls = reviews.map((r) => ({

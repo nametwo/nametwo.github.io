@@ -12,6 +12,12 @@ export const SITE = {
   },
   github: 'https://github.com/nametwo',
   gaId: 'G-TRG7ZNYZ19',
+  operator: {
+    name: '이선용',
+    // 봇 스팸 방지를 위해 마스킹된 형태로만 노출.
+    emailMasked: 'dlt***@gmail.com',
+  },
+  launchDate: '2026-05-04',
   giscus: {
     repo: 'nametwo/nametwo.github.io',
     repoId: 'R_kgDOSOcYrQ',
