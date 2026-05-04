@@ -11,4 +11,16 @@ export const SITE = {
     google: 'G_QnIAlnbEoVyo9myFb3f8hBrQXcmCC2b45WJaKnris',
   },
   github: 'https://github.com/nametwo',
+  gaId: 'G-TRG7ZNYZ19',
+  giscus: {
+    repo: 'nametwo/nametwo.github.io',
+    repoId: 'R_kgDOSOcYrQ',
+    category: 'Announcements',
+    categoryId: 'DIC_kwDOSOcYrc4C8Sli',
+    mapping: 'pathname',
+    reactionsEnabled: '1',
+    emitMetadata: '0',
+    inputPosition: 'top',
+    lang: 'ko',
+  },
 } as const;

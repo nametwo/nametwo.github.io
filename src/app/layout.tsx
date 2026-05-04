@@ -4,6 +4,7 @@ import './globals.css';
 import 'katex/dist/katex.min.css';
 import { SITE } from '@/lib/site';
 import SiteHeader from '@/components/SiteHeader';
+import GoogleAnalytics from '@/components/GoogleAnalytics';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -85,6 +86,7 @@ export default function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
       <body className="min-h-full flex flex-col pt-14">
+        <GoogleAnalytics />
         <SiteHeader />
         {children}
       </body>

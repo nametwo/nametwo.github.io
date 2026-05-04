@@ -4,6 +4,7 @@ import { SITE } from '@/lib/site';
 import SiteShell from '@/components/SiteShell';
 import Toc from '@/components/Toc';
 import ReadingProgress from '@/components/ReadingProgress';
+import Comments from '@/components/Comments';
 import { notFound } from 'next/navigation';
 
 export function generateStaticParams() {
@@ -97,6 +98,8 @@ export default async function ReviewPage({
           >
             <MDXContent />
           </article>
+
+          <Comments />
         </div>
 
         <aside className="col-span-12 lg:col-span-4 hidden lg:block">
